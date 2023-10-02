@@ -1,9 +1,9 @@
 'use client';
 
 import { Listbox, ListboxItem } from '@nextui-org/react';
-import IconWrapper from './IconWrapper';
-import { FiClock, FiFileText } from 'react-icons/fi';
 import { BsChevronRight } from 'react-icons/bs';
+import { FiClock, FiFileText } from 'react-icons/fi';
+import IconWrapper from './IconWrapper';
 
 export default function Sidebar() {
   return (

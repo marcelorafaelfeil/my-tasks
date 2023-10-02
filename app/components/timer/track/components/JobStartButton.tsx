@@ -3,7 +3,11 @@
 import { Button } from '@nextui-org/react';
 import { BsFillPlayFill } from 'react-icons/bs';
 
-export default function JobStartButton() {
+type JobStartButtonProps = {
+  onStart: () => void;
+};
+
+export default function JobStartButton(props: JobStartButtonProps) {
   return (
     <Button
       isIconOnly
@@ -11,6 +15,7 @@ export default function JobStartButton() {
       color="success"
       variant="shadow"
       className={'text-xl text-white'}
+      onClick={props.onStart}
     >
       <BsFillPlayFill />
     </Button>
