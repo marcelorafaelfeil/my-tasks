@@ -1,6 +1,9 @@
-import './globals.css';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
+import React from 'react';
+import TwoColumnsLayout from './components/layout/TwoColumnsLayout';
+import Sidebar from './components/sidebar/Sidebar';
+import './globals.css';
 import { Providers } from './providers';
 
 const inter = Inter({ subsets: ['latin'] });
@@ -19,7 +22,12 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <Providers>
-          {children}
+          <div className="dark text-foreground bg-background min-h-screen w-full">
+            <TwoColumnsLayout
+              firstColumn={<Sidebar />}
+              secondColumn={<main>{children}</main>}
+            />
+          </div>
         </Providers>
       </body>
     </html>

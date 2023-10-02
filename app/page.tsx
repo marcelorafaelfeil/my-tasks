@@ -1,7 +1,9 @@
-import { Button } from '@nextui-org/button'
+import Track from './components/timer/track/Track';
 
 export default function Home() {
   return (
-    <Button>Click me!</Button>
-  )
+    <div>
+      <Track />
+    </div>
+  );
 }
