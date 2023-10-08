@@ -1,31 +1,18 @@
 'use client';
 
-import { useState } from 'react';
-import JobStartButton from './components/JobStartButton';
-import TrackField from './components/TrackField';
+import JobStartButton from './components/JobStartButton/JobStartButton';
+import { TimeField } from './components/TimeField/TimeField';
+import TrackField from './components/TrackField/TrackField';
+import { AppTrackContext } from './components/context/TrackContext';
 
-type TrackProps = {
-  onStart?: (taskDescription: string) => void;
-};
-
-export default function Track(props: TrackProps) {
-  const [taskDescription, setTaskDescription] = useState('');
-
-  const handleStart = () => {
-    if (props.onStart) {
-      props.onStart(taskDescription);
-    }
-  };
-
+export default function Track() {
   return (
-    <>
+    <AppTrackContext>
       <div className="flex gap-3">
-        <TrackField
-          value={taskDescription}
-          onChange={(value) => setTaskDescription(value)}
-        />
-        <JobStartButton onStart={handleStart} />
+        <TrackField />
+        <TimeField />
+        <JobStartButton />
       </div>
-    </>
+    </AppTrackContext>
   );
 }

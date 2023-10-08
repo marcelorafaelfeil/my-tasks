@@ -1,13 +1,17 @@
 'use client';
 
 import { Button } from '@nextui-org/react';
+import { useContext } from 'react';
 import { BsFillPlayFill } from 'react-icons/bs';
+import { TrackContext } from '../context/TrackContext';
 
-type JobStartButtonProps = {
-  onStart: () => void;
-};
+export default function JobStartButton() {
+  const context = useContext(TrackContext);
 
-export default function JobStartButton(props: JobStartButtonProps) {
+  const handleClick = () => {
+    context.startTask();
+  };
+
   return (
     <Button
       isIconOnly
@@ -15,7 +19,7 @@ export default function JobStartButton(props: JobStartButtonProps) {
       color="success"
       variant="shadow"
       className={'text-xl text-white'}
-      onClick={props.onStart}
+      onClick={handleClick}
     >
       <BsFillPlayFill />
     </Button>

@@ -1,10 +1,10 @@
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import React from 'react';
-import TwoColumnsLayout from './components/layout/TwoColumnsLayout';
 import Sidebar from './components/sidebar/Sidebar';
 import './globals.css';
 import { Providers } from './providers';
+import { TwoColumnsLayout } from './templates/TwoColumns/TwoColumns';
 
 const inter = Inter({ subsets: ['latin'] });
 
