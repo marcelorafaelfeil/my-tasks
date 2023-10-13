@@ -1,17 +1,26 @@
 'use client';
 
 import { Input } from '@nextui-org/react';
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { TrackContext } from '../context/TrackContext';
 
 export default function TrackField() {
   const [value, setValue] = useState('');
   const context = useContext(TrackContext);
+  const { state } = context;
 
   const handleInput = (event: React.ChangeEvent<HTMLInputElement>) => {
     context.defineTaskTitle(event.target.value);
     setValue(event.target.value);
   };
+
+  useEffect(() => {
+    if (state.title) {
+      setValue(state.title || '');
+    } else {
+      setValue('');
+    }
+  }, [state.title]);
 
   return (
     <Input

@@ -4,6 +4,8 @@ export interface Tasks {
   id?: number;
   title: string;
   startDate: Date;
+  endDate?: Date;
+  status: 'idle' | 'ongoing' | 'finished';
 }
 
 export class DBInitializer extends Dexie {
@@ -12,7 +14,7 @@ export class DBInitializer extends Dexie {
   constructor() {
     super('MyTasks');
     this.version(1).stores({
-      tasks: '++id, title',
+      tasks: '++id, title, status',
     });
   }
 }
