@@ -19,10 +19,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html lang="en" className="dark">
       <body className={inter.className}>
         <Providers>
-          <div className="dark text-foreground bg-background min-h-screen w-full">
+          <div className="text-foreground bg-background min-h-screen w-full">
             <TwoColumnsLayout
               firstColumn={<Sidebar />}
               secondColumn={<main>{children}</main>}
