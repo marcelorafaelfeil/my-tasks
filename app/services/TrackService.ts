@@ -17,6 +17,24 @@ export const newTask = async (
   }
 };
 
+export const updateTitle = async (
+  id: number,
+  title: string,
+  callback?: (status: number) => void,
+) => {
+  if (!id || !title) {
+    throw new Error('It is necessary to specify the "id" and "title"');
+  }
+
+  const updatedTask: number = await db.tasks.where('id').equals(id).modify({
+    title,
+  });
+
+  if (callback) {
+    callback(updatedTask);
+  }
+};
+
 export const stopCurrentTask = async (callback?: (status: number) => void) => {
   const onGoingTasks: number = await db.tasks
     .where('status')
