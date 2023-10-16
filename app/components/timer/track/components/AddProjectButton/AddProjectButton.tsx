@@ -6,12 +6,23 @@ import {
   ModalFooter,
   ModalHeader,
 } from '@nextui-org/react';
+import { useState } from 'react';
 import { AiOutlinePlus } from 'react-icons/ai';
 import { AddProjectForm } from './components/AddProjectForm/AddProjectForm';
 
 export const AddProjectButton = () => {
+  const [isLoading, setIsLoading] = useState(false);
+
   const handleOpenModal = () => {
     console.log('open modal');
+  };
+
+  const handleLoadingOnSave = () => {
+    setIsLoading(true);
+  };
+
+  const handleFinishOnSave = () => {
+    setIsLoading(false);
   };
 
   const handleSubmit = () => {
@@ -36,7 +47,10 @@ export const AddProjectButton = () => {
                 Novo projeto
               </ModalHeader>
               <ModalBody>
-                <AddProjectForm />
+                <AddProjectForm
+                  onLoading={handleLoadingOnSave}
+                  onFinish={handleFinishOnSave}
+                />
               </ModalBody>
               <ModalFooter>
                 <Button color="danger" variant="flat" onPress={onClose}>

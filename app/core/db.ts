@@ -17,7 +17,7 @@ export interface Project {
   archived: boolean;
   color?: string;
   createdAt: Date;
-  hourPrice: number;
+  hourPrice?: number;
 }
 
 export interface Tasks {

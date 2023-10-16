@@ -1,13 +1,22 @@
+import { newProject } from '@/app/services/ProjectService';
 import { Input, Switch } from '@nextui-org/react';
 import { useCallback, useEffect, useState } from 'react';
 import { AiOutlineFolder } from 'react-icons/ai';
 import { BiDollar } from 'react-icons/bi';
 import { NumericFormat } from 'react-number-format';
 
-export const AddProjectForm = () => {
+type AddProjectFormProps = {
+  onLoading?: () => void;
+  onFinish?: () => void;
+};
+
+export const AddProjectForm = ({
+  onLoading,
+  onFinish,
+}: AddProjectFormProps) => {
   const [projectName, setProjectName] = useState('');
   const [billing, setBilling] = useState(false);
-  const [hourPrice, setHourPrice] = useState<number | null>(0.0);
+  const [hourPrice, setHourPrice] = useState<number | undefined>(0.0);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [projectNameError, setProjectNameError] = useState<string | null>('');
   const [hourPriceError, setHourPriceError] = useState<string | null>('');
@@ -27,12 +36,22 @@ export const AddProjectForm = () => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (onLoading) {
+      onLoading();
+    }
     setIsSubmitted(true);
     if (isFormValid()) {
-      console.log('Podemos cadastrar...');
+      newProject(projectName, billing, hourPrice, () => {
+        if (onFinish) {
+          onFinish();
+        }
+      });
       return;
     }
-    console.log('Não podemos cadastrar...');
+
+    if (onFinish) {
+      onFinish();
+    }
   };
 
   useEffect(() => {
@@ -74,7 +93,7 @@ export const AddProjectForm = () => {
           thousandSeparator=","
           decimalScale={2}
           decimalSeparator="."
-          onValueChange={(v) => setHourPrice(v.floatValue || null)}
+          onValueChange={(v) => setHourPrice(v.floatValue || undefined)}
           variant="bordered"
           aria-label="Hour price"
           label="Hour price"
@@ -87,16 +106,3 @@ export const AddProjectForm = () => {
     </form>
   );
 };
-
-/* <Input
-          autoFocus
-          endContent={<BiDollar />}
-          className="no-spin"
-          label="Hour price"
-          variant="bordered"
-          type="number"
-          aria-label="Project's name"
-          data-1p-ignore
-          onValueChange={(v) => setHourPrice(v)}
-          value={hourPrice}
-        /> */
