@@ -42,7 +42,12 @@ export const AddProjectButton = () => {
                 <Button color="danger" variant="flat" onPress={onClose}>
                   Close
                 </Button>
-                <Button color="primary" onPress={handleSubmit}>
+                <Button
+                  color="primary"
+                  type="submit"
+                  form="projectForm"
+                  onPress={handleSubmit}
+                >
                   Create project
                 </Button>
               </ModalFooter>
