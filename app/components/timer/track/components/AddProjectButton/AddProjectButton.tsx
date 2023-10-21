@@ -1,17 +1,8 @@
-import {
-  Button,
-  Modal,
-  ModalBody,
-  ModalContent,
-  ModalFooter,
-  ModalHeader,
-} from '@nextui-org/react';
-import { useState } from 'react';
+import { Button } from '@nextui-org/react';
 import { AiOutlinePlus } from 'react-icons/ai';
-import { AddProjectForm } from './components/AddProjectForm/AddProjectForm';
 
 export const AddProjectButton = () => {
-  const [isLoading, setIsLoading] = useState(false);
+  /* const [isLoading, setIsLoading] = useState(false);
 
   const handleOpenModal = () => {
     console.log('open modal');
@@ -27,19 +18,14 @@ export const AddProjectButton = () => {
 
   const handleSubmit = () => {
     console.log('form submitted');
-  };
+  }; */
 
   return (
     <>
-      <Button
-        size="lg"
-        className="w-full"
-        startContent={<AiOutlinePlus />}
-        onPress={handleOpenModal}
-      >
+      <Button size="lg" className="w-full" startContent={<AiOutlinePlus />}>
         Create a project
       </Button>
-      <Modal isOpen={true} placement="top-center">
+      {/* <Modal isOpen={true} placement="top-center">
         <ModalContent>
           {(onClose) => (
             <>
@@ -68,7 +54,7 @@ export const AddProjectButton = () => {
             </>
           )}
         </ModalContent>
-      </Modal>
+      </Modal> */}
     </>
   );
 };

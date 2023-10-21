@@ -1,4 +1,4 @@
-import { Project } from '@/app/core/db';
+import { Project } from '@/app/core/models/Project';
 import { Select, SelectItem } from '@nextui-org/react';
 import { AddProjectButton } from '../AddProjectButton/AddProjectButton';
 import { ListProjectItem } from './components/SelectedProjectItem/ListProjectItem';

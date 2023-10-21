@@ -1,5 +1,5 @@
 import { TrackActionsEnum } from './TrackActionsEnum';
-import { TrackAction, TrackState } from './Types';
+import { TrackAction, TrackState, TrackStatus } from './Types';
 
 export const trackReducer = (
   state: TrackState,
@@ -12,11 +12,11 @@ export const trackReducer = (
       return {
         ...state,
         startTime: action.payload?.startTime,
-        status: 'ongoing',
+        status: TrackStatus.ONGOING,
       };
     }
     case TrackActionsEnum.STOP: {
-      return { status: 'idle' } as TrackState;
+      return { status: TrackStatus.IDLE } as TrackState;
     }
     case TrackActionsEnum.RESCUE_TASK: {
       return { ...state, ...action.payload };

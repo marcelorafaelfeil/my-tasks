@@ -12,8 +12,14 @@ export type TrackState = {
   title?: string;
   startTime?: Date;
   endTime?: Date;
-  status: 'idle' | 'ongoing' | 'finished';
+  status: TrackStatus;
 };
+
+export enum TrackStatus {
+  IDLE,
+  ONGOING,
+  FINISHED,
+}
 
 export type TrackAction = {
   type: TrackActionsEnum;

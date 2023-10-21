@@ -1,5 +1,11 @@
 import { IndexableType } from 'dexie';
+import { TrackState } from '../components/timer/track/components/context/Types';
 import { db } from '../core/db';
+import {
+  DBTasks,
+  DBTrackStatus,
+  dbTrackStatusToTrackState,
+} from '../core/models/Tasks';
 
 export const newTask = async (
   title: string | undefined,
@@ -9,7 +15,7 @@ export const newTask = async (
   const id: IndexableType = await db.tasks.add({
     title: title || 'No named task',
     startDate,
-    status: 'ongoing',
+    status: DBTrackStatus.ONGOING,
   });
 
   if (callback) {
@@ -38,13 +44,35 @@ export const updateTitle = async (
 export const stopCurrentTask = async (callback?: (status: number) => void) => {
   const onGoingTasks: number = await db.tasks
     .where('status')
-    .equals('ongoing')
+    .equals(DBTrackStatus.ONGOING)
     .modify({
       endDate: new Date(),
-      status: 'finished',
+      status: DBTrackStatus.FINISHED,
     });
 
   if (callback) {
     callback(onGoingTasks);
   }
+};
+
+const bindToTrackState = (dbValue: DBTasks | undefined): TrackState | null => {
+  if (dbValue) {
+    return {
+      id: dbValue.id,
+      status: dbTrackStatusToTrackState(dbValue.status),
+      startTime: dbValue.startDate,
+      endTime: dbValue.endDate,
+      title: dbValue.title,
+    };
+  }
+  return null;
+};
+
+export const getOngoingTask = async (): Promise<TrackState | null> => {
+  const response: DBTasks | undefined = await db.tasks
+    .where('status')
+    .equals(DBTrackStatus.ONGOING)
+    .first();
+
+  return bindToTrackState(response);
 };

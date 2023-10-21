@@ -43,12 +43,7 @@ export const AppTrackContext = (props: AppTrackContextProps) => {
   useEffect(() => {
     if (currentTask) {
       dispatch({
-        payload: {
-          id: currentTask?.id,
-          title: currentTask?.title,
-          status: currentTask?.status,
-          startTime: currentTask?.startDate,
-        } as TrackState,
+        payload: currentTask,
         type: TrackActionsEnum.RESCUE_TASK,
       });
     }
