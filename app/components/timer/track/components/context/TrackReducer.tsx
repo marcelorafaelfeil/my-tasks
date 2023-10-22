@@ -1,24 +1,25 @@
-import { TrackActionsEnum } from './TrackActionsEnum';
-import { TrackAction, TrackState } from './Types';
+import { TaskActionsEnum } from './TaskActionsEnum';
+import { Task } from './types/Task';
+import { TaskAction } from './types/TaskAction';
+import { TaskStatus } from './types/TaskStatus';
 
-export const trackReducer = (
-  state: TrackState,
-  action: TrackAction,
-): TrackState => {
+export const trackReducer = (state: Task, action: TaskAction): Task => {
   switch (action.type) {
-    case TrackActionsEnum.DEFINE_TITLE:
+    case TaskActionsEnum.DEFINE_TITLE:
       return { ...state, title: action.payload?.title };
-    case TrackActionsEnum.START: {
+    case TaskActionsEnum.DEFINE_PROJECT:
+      return { ...state, project: action.payload?.project };
+    case TaskActionsEnum.START: {
       return {
         ...state,
         startTime: action.payload?.startTime,
-        status: 'ongoing',
+        status: TaskStatus.ONGOING,
       };
     }
-    case TrackActionsEnum.STOP: {
-      return { status: 'idle' } as TrackState;
+    case TaskActionsEnum.STOP: {
+      return { status: TaskStatus.IDLE } as Task;
     }
-    case TrackActionsEnum.RESCUE_TASK: {
+    case TaskActionsEnum.RESCUE_TASK: {
       return { ...state, ...action.payload };
     }
     default:

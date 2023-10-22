@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import React from 'react';
+import { Toaster } from 'react-hot-toast';
 import Sidebar from './components/sidebar/Sidebar';
 import './globals.css';
 import { Providers } from './providers';
@@ -19,10 +20,16 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html lang="en" className="dark">
       <body className={inter.className}>
+        <Toaster
+          position="bottom-right"
+          toastOptions={{
+            duration: 3000,
+          }}
+        />
         <Providers>
-          <div className="dark text-foreground bg-background min-h-screen w-full">
+          <div className="text-foreground bg-background min-h-screen w-full">
             <TwoColumnsLayout
               firstColumn={<Sidebar />}
               secondColumn={<main>{children}</main>}

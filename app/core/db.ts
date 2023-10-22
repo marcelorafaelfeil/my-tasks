@@ -1,37 +1,12 @@
 import Dexie, { Table } from 'dexie';
-
-export interface Client {
-  id?: number;
-  name: string;
-  createdAt?: Date;
-  enabled: boolean;
-  archived: boolean;
-}
-
-export interface Project {
-  id?: number;
-  name: string;
-  client?: Client;
-  billing: boolean;
-  enabled: boolean;
-  archived: boolean;
-  color?: string;
-  createdAt: Date;
-}
-
-export interface Tasks {
-  id?: number;
-  title: string;
-  startDate: Date;
-  endDate?: Date;
-  project?: Project;
-  status: 'idle' | 'ongoing' | 'finished';
-}
+import { Client } from '../components/timer/track/components/context/types/Client';
+import { Project } from '../components/timer/track/components/context/types/Project';
+import { Task } from '../components/timer/track/components/context/types/Task';
 
 export class DBInitializer extends Dexie {
   client!: Table<Client>;
   project!: Table<Project>;
-  tasks!: Table<Tasks>;
+  tasks!: Table<Task>;
 
   constructor() {
     super('MyTasks');

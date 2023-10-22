@@ -25,3 +25,11 @@ body {
     )
     rgb(var(--background-start-rgb));
 }
+
+.no-spin::-webkit-inner-spin-button,
+.no-spin::-webkit-outer-sping-button,
+.no-spin input::-webkit-inner-spin-button,
+.no-spin input::-webkit-outer-sping-button {
+  -webkit-appearance: none;
+  margin: 0;
+}

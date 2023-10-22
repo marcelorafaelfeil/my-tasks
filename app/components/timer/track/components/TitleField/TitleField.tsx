@@ -1,6 +1,6 @@
 'use client';
 
-import { updateTitle } from '@/app/services/TrackService';
+import { updateTitle } from '@/app/services/TaskService';
 import { Input } from '@nextui-org/react';
 import { useContext, useEffect, useState } from 'react';
 import { TrackContext } from '../context/TrackContext';
@@ -15,7 +15,7 @@ export default function TitleField() {
     setValue(event.target.value);
 
     if (state.id) {
-      updateTitle(state.id, event.target.value);
+      updateTitle(state.id, event.target.value).then();
     }
   };
 

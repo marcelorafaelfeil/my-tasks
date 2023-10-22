@@ -1,33 +1,35 @@
 import { createContext, useEffect, useReducer } from 'react';
 import { useCurrentTask } from '../../hooks/useCurrentTask';
-import { TrackActionsEnum } from './TrackActionsEnum';
+import { TaskActionsEnum } from './TaskActionsEnum';
 import { trackReducer } from './TrackReducer';
-import { TrackContextType, TrackState } from './Types';
+import { Project } from './types/Project';
+import { Task } from './types/Task';
+import { TaskContextType } from './types/TaskContextType';
 
 type AppTrackContextProps = {
   children: React.ReactNode;
 };
 
-export const TrackContext = createContext<TrackContextType>(
-  {} as TrackContextType,
+export const TrackContext = createContext<TaskContextType>(
+  {} as TaskContextType,
 );
 
 export const AppTrackContext = (props: AppTrackContextProps) => {
-  const [state, dispatch] = useReducer(trackReducer, {} as TrackState);
+  const [state, dispatch] = useReducer(trackReducer, {} as Task);
   const currentTask = useCurrentTask();
 
   const startTask = () => {
     dispatch({
       payload: {
         startTime: new Date(),
-      } as TrackState,
-      type: TrackActionsEnum.START,
+      } as Task,
+      type: TaskActionsEnum.START,
     });
   };
 
   const stopTask = () => {
     dispatch({
-      type: TrackActionsEnum.STOP,
+      type: TaskActionsEnum.STOP,
     });
   };
 
@@ -35,28 +37,32 @@ export const AppTrackContext = (props: AppTrackContextProps) => {
     dispatch({
       payload: {
         title: title,
-      } as TrackState,
-      type: TrackActionsEnum.DEFINE_TITLE,
+      } as Task,
+      type: TaskActionsEnum.DEFINE_TITLE,
+    });
+  };
+
+  const defineTaskProject = (project: Project) => {
+    dispatch({
+      payload: {
+        project,
+      } as Task,
+      type: TaskActionsEnum.DEFINE_PROJECT,
     });
   };
 
   useEffect(() => {
     if (currentTask) {
       dispatch({
-        payload: {
-          id: currentTask?.id,
-          title: currentTask?.title,
-          status: currentTask?.status,
-          startTime: currentTask?.startDate,
-        } as TrackState,
-        type: TrackActionsEnum.RESCUE_TASK,
+        payload: currentTask,
+        type: TaskActionsEnum.RESCUE_TASK,
       });
     }
   }, [currentTask]);
 
   return (
     <TrackContext.Provider
-      value={{ state, startTask, stopTask, defineTaskTitle }}
+      value={{ state, startTask, stopTask, defineTaskTitle, defineTaskProject }}
     >
       {props.children}
     </TrackContext.Provider>
