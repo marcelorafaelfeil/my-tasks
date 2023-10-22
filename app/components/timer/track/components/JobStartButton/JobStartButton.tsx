@@ -1,6 +1,6 @@
 'use client';
 
-import { newTask, stopCurrentTask } from '@/app/services/TrackService';
+import { newTask, stopCurrentTask } from '@/app/services/TaskService';
 import { Button } from '@nextui-org/react';
 import { useContext, useEffect } from 'react';
 import { BsFillPlayFill, BsFillStopFill } from 'react-icons/bs';
@@ -16,16 +16,18 @@ export default function JobStartButton() {
 
   const handleStopTask = () => {
     context.stopTask();
-    stopCurrentTask();
+    stopCurrentTask().then();
   };
 
   useEffect(() => {
     if (state.startTime && !state.id) {
-      newTask(state.title, state.startTime!, (id: string) => {
-        console.log('Task adicionada com sucesso!', id);
-      });
+      newTask(state.title, state.startTime!, state.project).then(
+        (id: string) => {
+          console.log('Task adicionada com sucesso!', id);
+        },
+      );
     }
-  }, [state.startTime, state.title, state.id]);
+  }, [state.startTime, state.title, state.project, state.id]);
 
   return !state.id ? (
     <Button

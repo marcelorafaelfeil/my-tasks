@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import React from 'react';
+import { Toaster } from 'react-hot-toast';
 import Sidebar from './components/sidebar/Sidebar';
 import './globals.css';
 import { Providers } from './providers';
@@ -21,6 +22,12 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark">
       <body className={inter.className}>
+        <Toaster
+          position="bottom-right"
+          toastOptions={{
+            duration: 3000,
+          }}
+        />
         <Providers>
           <div className="text-foreground bg-background min-h-screen w-full">
             <TwoColumnsLayout

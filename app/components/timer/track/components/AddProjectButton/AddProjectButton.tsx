@@ -1,31 +1,35 @@
-import { Button } from '@nextui-org/react';
+import {
+  Button,
+  Modal,
+  ModalBody,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  useDisclosure,
+} from '@nextui-org/react';
+import toast from 'react-hot-toast';
 import { AiOutlinePlus } from 'react-icons/ai';
+import { AddProjectForm } from './components/AddProjectForm/AddProjectForm';
 
 export const AddProjectButton = () => {
-  /* const [isLoading, setIsLoading] = useState(false);
+  const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
 
-  const handleOpenModal = () => {
-    console.log('open modal');
+  const handleOnSuccess = () => {
+    toast.success('Projeto criado com sucesso');
+    onClose();
   };
-
-  const handleLoadingOnSave = () => {
-    setIsLoading(true);
-  };
-
-  const handleFinishOnSave = () => {
-    setIsLoading(false);
-  };
-
-  const handleSubmit = () => {
-    console.log('form submitted');
-  }; */
 
   return (
     <>
-      <Button size="lg" className="w-full" startContent={<AiOutlinePlus />}>
+      <Button
+        size="lg"
+        className="w-full"
+        startContent={<AiOutlinePlus />}
+        onClick={onOpen}
+      >
         Create a project
       </Button>
-      {/* <Modal isOpen={true} placement="top-center">
+      <Modal isOpen={isOpen} placement="top-center" onOpenChange={onOpenChange}>
         <ModalContent>
           {(onClose) => (
             <>
@@ -33,28 +37,20 @@ export const AddProjectButton = () => {
                 Novo projeto
               </ModalHeader>
               <ModalBody>
-                <AddProjectForm
-                  onLoading={handleLoadingOnSave}
-                  onFinish={handleFinishOnSave}
-                />
+                <AddProjectForm onSuccess={handleOnSuccess} />
               </ModalBody>
               <ModalFooter>
                 <Button color="danger" variant="flat" onPress={onClose}>
                   Close
                 </Button>
-                <Button
-                  color="primary"
-                  type="submit"
-                  form="projectForm"
-                  onPress={handleSubmit}
-                >
+                <Button color="primary" type="submit" form="projectForm">
                   Create project
                 </Button>
               </ModalFooter>
             </>
           )}
         </ModalContent>
-      </Modal> */}
+      </Modal>
     </>
   );
 };

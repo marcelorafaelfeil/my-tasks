@@ -1,4 +1,4 @@
-import { Project } from '@/app/core/db';
+import { Project } from '../../../context/types/Project';
 
 type ListProjectItemProps = {
   project: Project;

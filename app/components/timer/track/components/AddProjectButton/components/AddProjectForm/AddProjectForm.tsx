@@ -4,15 +4,18 @@ import { useCallback, useEffect, useState } from 'react';
 import { AiOutlineFolder } from 'react-icons/ai';
 import { BiDollar } from 'react-icons/bi';
 import { NumericFormat } from 'react-number-format';
+import { Project } from '../../../context/types/Project';
 
 type AddProjectFormProps = {
   onLoading?: () => void;
   onFinish?: () => void;
+  onSuccess?: (project: Project) => void;
 };
 
 export const AddProjectForm = ({
   onLoading,
   onFinish,
+  onSuccess,
 }: AddProjectFormProps) => {
   const [projectName, setProjectName] = useState('');
   const [billing, setBilling] = useState(false);
@@ -22,30 +25,35 @@ export const AddProjectForm = ({
   const [hourPriceError, setHourPriceError] = useState<string | null>('');
 
   const isFormValid = useCallback(() => {
-    if (isSubmitted) {
-      const isHourPriceValid = (billing && hourPrice) || !billing;
+    const isHourPriceValid = (billing && hourPrice) || !billing;
 
-      const isValid = projectName && isHourPriceValid;
-      setProjectNameError(!projectName ? 'Project name is mandatory.' : null);
-      setHourPriceError(!isHourPriceValid ? 'Hour price is mandatory.' : null);
+    const isValid = projectName && isHourPriceValid;
+    setProjectNameError(!projectName ? 'Project name is mandatory.' : null);
+    setHourPriceError(!isHourPriceValid ? 'Hour price is mandatory.' : null);
 
-      return isValid;
-    }
-    return false;
-  }, [projectName, hourPrice, isSubmitted, billing]);
+    return isValid;
+  }, [projectName, hourPrice, billing]);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (onLoading) {
       onLoading();
     }
+
     setIsSubmitted(true);
+
     if (isFormValid()) {
-      newProject(projectName, billing, hourPrice, () => {
-        if (onFinish) {
-          onFinish();
-        }
-      });
+      newProject(projectName, billing, hourPrice).then(
+        (savedProject: Project | undefined) => {
+          clearForm();
+          if (onFinish) {
+            onFinish();
+          }
+          if (onSuccess) {
+            onSuccess(savedProject!);
+          }
+        },
+      );
       return;
     }
 
@@ -54,9 +62,18 @@ export const AddProjectForm = ({
     }
   };
 
+  const clearForm = () => {
+    setProjectName('');
+    setBilling(false);
+    setHourPrice(0.0);
+    setIsSubmitted(false);
+  };
+
   useEffect(() => {
-    isFormValid();
-  }, [projectName, hourPrice, isFormValid]);
+    if (isSubmitted) {
+      isFormValid();
+    }
+  }, [projectName, hourPrice, isSubmitted, isFormValid]);
 
   return (
     <form

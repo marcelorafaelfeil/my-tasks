@@ -1,4 +1,4 @@
-import { getOngoingTask } from '@/app/services/TrackService';
+import { getOngoingTask } from '@/app/services/TaskService';
 import { useLiveQuery } from 'dexie-react-hooks';
 
 export const useCurrentTask = () => {
