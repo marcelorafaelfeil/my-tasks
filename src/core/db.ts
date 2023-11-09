@@ -1,7 +1,7 @@
 import Dexie, { Table } from 'dexie';
-import { Task } from '../components/TaskListSection/types/Task';
 import { Client } from '../components/Timer/Track/context/types/Client';
 import { Project } from '../components/Timer/Track/context/types/Project';
+import { Task } from '../components/Timer/Track/context/types/Task';
 
 export class DBInitializer extends Dexie {
   client!: Table<Client>;
